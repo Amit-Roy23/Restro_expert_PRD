@@ -1,0 +1,3289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Restro Expert — Product Requirements Document (PRD v1.0)</title>
+  <meta name="description" content="Product Requirements Document for Restro Expert: Restaurant Business Management & Service Marketplace.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ==========================================================================
+       1. CSS VARIABLES & THEMES
+       ========================================================================== */
+    :root {
+      /* Brand Accents */
+      --primary: #f97316;
+      --primary-hover: #ea580c;
+      --primary-light: rgba(249, 115, 22, 0.12);
+      --primary-glow: rgba(249, 115, 22, 0.25);
+      
+      --secondary: #6366f1;
+      --secondary-light: rgba(99, 102, 241, 0.12);
+      
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-sky: #0ea5e9;
+      --accent-purple: #8b5cf6;
+
+      /* Priority Colors */
+      --p0-bg: rgba(244, 63, 94, 0.12);
+      --p0-text: #f43f5e;
+      --p0-border: rgba(244, 63, 94, 0.3);
+      
+      --p1-bg: rgba(245, 158, 11, 0.12);
+      --p1-text: #f59e0b;
+      --p1-border: rgba(245, 158, 11, 0.3);
+
+      --p2-bg: rgba(99, 102, 241, 0.12);
+      --p2-text: #818cf8;
+      --p2-border: rgba(99, 102, 241, 0.3);
+
+      /* Typography */
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+      /* Layout */
+      --sidebar-width: 290px;
+      --header-height: 64px;
+      --content-max-width: 1140px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+    }
+
+    /* Dark Theme (Default) */
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-base: #090d16;
+      --bg-surface: #0f172a;
+      --bg-surface-elevated: #162036;
+      --bg-surface-hover: #1e293b;
+      --bg-glass: rgba(15, 23, 42, 0.82);
+      
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.15);
+      --border-highlight: rgba(249, 115, 22, 0.4);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 30px rgba(249, 115, 22, 0.18);
+
+      --table-header-bg: #131c31;
+      --table-row-hover: rgba(255, 255, 255, 0.03);
+      --table-stripe: rgba(255, 255, 255, 0.015);
+      --code-bg: #131b2e;
+      --card-gradient: linear-gradient(145deg, rgba(22, 32, 54, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+    }
+
+    /* Light Theme */
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-surface-hover: #e2e8f0;
+      --bg-glass: rgba(255, 255, 255, 0.88);
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+      
+      --border-subtle: rgba(0, 0, 0, 0.07);
+      --border-strong: rgba(0, 0, 0, 0.14);
+      --border-highlight: rgba(249, 115, 22, 0.5);
+      
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 36px -8px rgba(0, 0, 0, 0.12);
+      --shadow-glow: 0 0 24px rgba(249, 115, 22, 0.15);
+
+      --table-header-bg: #f1f5f9;
+      --table-row-hover: rgba(249, 115, 22, 0.04);
+      --table-stripe: #fafbfc;
+      --code-bg: #f1f5f9;
+      --card-gradient: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-height) + 24px);
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--text-main);
+      background-color: var(--bg-base);
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(249, 115, 22, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(99, 102, 241, 0.05) 0%, transparent 45%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Selection */
+    ::selection {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg-surface-hover);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       3. TOP NAVIGATION HEADER
+       ========================================================================== */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      transition: all 0.2s ease;
+    }
+
+    .reading-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--primary) 0%, #f59e0b 50%, var(--secondary) 100%);
+      width: 0%;
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 8px var(--primary);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-toggle-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-wrap {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--primary) 0%, #f59e0b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 17px;
+      box-shadow: 0 2px 10px var(--primary-glow);
+    }
+
+    .brand-titles {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .version-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--border-highlight);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Search Box in Header */
+    .search-box-container {
+      position: relative;
+      width: 260px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 36px;
+      padding: 0 34px 0 34px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: var(--font-body);
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+      width: 15px;
+      height: 15px;
+    }
+
+    .search-kbd {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-family: var(--font-mono);
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      pointer-events: none;
+    }
+
+    /* Action Buttons */
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      color: var(--text-main);
+      background: var(--bg-surface-hover);
+      border-color: var(--border-strong);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--primary) 0%, #ea580c 100%);
+      border: none;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    /* Filter Pill Group */
+    .filter-pills {
+      display: flex;
+      align-items: center;
+      background: var(--bg-surface);
+      padding: 3px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .filter-pill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: calc(var(--radius-md) - 2px);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-pill-btn.active {
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-pill-btn.active[data-priority="P0"] {
+      color: var(--p0-text);
+      background: var(--p0-bg);
+    }
+
+    .filter-pill-btn.active[data-priority="P1"] {
+      color: var(--p1-text);
+      background: var(--p1-bg);
+    }
+
+    .filter-pill-btn.active[data-priority="P2"] {
+      color: var(--p2-text);
+      background: var(--p2-bg);
+    }
+
+    /* ==========================================================================
+       4. MAIN APP LAYOUT (SIDEBAR + CONTENT)
+       ========================================================================== */
+    .app-container {
+      display: flex;
+      margin-top: var(--header-height);
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      position: fixed;
+      top: var(--header-height);
+      bottom: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      overflow-y: auto;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 900;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar-heading {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      padding: 0 10px 4px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toc-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    .toc-item a:hover {
+      color: var(--text-main);
+      background: var(--bg-surface-hover);
+    }
+
+    .toc-item a.active {
+      color: var(--primary);
+      background: var(--primary-light);
+      font-weight: 600;
+      border-left: 2.5px solid var(--primary);
+    }
+
+    .toc-item-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toc-badge {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      background: var(--bg-surface-elevated);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-quick-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 12px;
+      text-decoration: none;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s;
+    }
+
+    .sidebar-quick-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-strong);
+    }
+
+    /* Content Area */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 36px 48px 80px;
+      max-width: calc(var(--content-max-width) + var(--sidebar-width));
+      width: 100%;
+    }
+
+    .content-wrapper {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* ==========================================================================
+       5. HERO / EXECUTIVE COVER BANNER
+       ========================================================================== */
+    .hero-banner {
+      position: relative;
+      background: var(--card-gradient);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-header-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .status-badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.12);
+      color: #f59e0b;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .status-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f59e0b;
+      animation: pulse-dot 1.8s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+      70% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin-bottom: 28px;
+    }
+
+    /* Meta Details Grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .meta-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: border-color 0.2s;
+    }
+
+    .meta-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+    }
+
+    .meta-value {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Vision Highlight Card */
+    .vision-callout {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(99, 102, 241, 0.04) 100%);
+      border: 1px solid var(--border-highlight);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .vision-icon-wrap {
+      background: var(--primary);
+      color: #fff;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .vision-text {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text-main);
+      font-style: italic;
+    }
+
+    .vision-text strong {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    /* ==========================================================================
+       6. SECTION HEADINGS & CONTAINERS
+       ========================================================================== */
+    .prd-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px 34px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .prd-section:hover {
+      border-color: var(--border-strong);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .subsection-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 16px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Section Subtitle / Intro */
+    .section-lead {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       7. CARDS & GRIDS (PERSONAS, METRICS, ETC.)
+       ========================================================================== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .kpi-metric-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .kpi-metric-value {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .kpi-metric-sub {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* Persona Cards */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .persona-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .persona-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .persona-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .persona-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .persona-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .persona-code {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .persona-name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .persona-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       8. TABLES & DATA MATRICES
+       ========================================================================== */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin: 16px 0;
+    }
+
+    table.prd-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    table.prd-table th {
+      background: var(--table-header-bg);
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    table.prd-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      vertical-align: top;
+      background: var(--bg-surface);
+      line-height: 1.55;
+    }
+
+    table.prd-table tr:nth-child(even) td {
+      background: var(--table-stripe);
+    }
+
+    table.prd-table tr:hover td {
+      background: var(--table-row-hover);
+    }
+
+    table.prd-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Tag / Chip styling inside tables */
+    .badge-p0 {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--p0-bg);
+      color: var(--p0-text);
+      border: 1px solid var(--p0-border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .badge-p1 {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--p1-bg);
+      color: var(--p1-text);
+      border: 1px solid var(--p1-border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .badge-p2 {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--p2-bg);
+      color: var(--p2-text);
+      border: 1px solid var(--p2-border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .req-id {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .check-yes {
+      color: var(--accent-emerald);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .check-no {
+      color: var(--text-dim);
+    }
+
+    /* Assumption callout badge */
+    .assumption-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(139, 92, 246, 0.12);
+      color: #a78bfa;
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    /* ==========================================================================
+       9. TIMELINE / ROADMAP PHASING
+       ========================================================================== */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .phase-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .phase-card.phase-mvp {
+      border-color: var(--border-highlight);
+      background: linear-gradient(145deg, var(--bg-surface-elevated) 0%, rgba(249, 115, 22, 0.05) 100%);
+    }
+
+    .phase-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .phase-tag {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .phase-duration {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .phase-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phase-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .phase-list li i {
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* ==========================================================================
+       10. FLOW STEPPER & INTERACTIVE FLOWS
+       ========================================================================== */
+    .flow-stepper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg-surface-elevated);
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s;
+    }
+
+    .flow-step:hover {
+      border-color: var(--border-highlight);
+      background: var(--bg-surface-hover);
+    }
+
+    .flow-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .flow-step-text {
+      font-size: 13.5px;
+      color: var(--text-main);
+    }
+
+    /* Code & Tag blocks */
+    code.code-pill {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--code-bg);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Alert / Callout Boxes */
+    .callout-box {
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .callout-box.info {
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      border-left: 4px solid var(--accent-sky);
+      color: var(--text-main);
+    }
+
+    .callout-box.warning {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-left: 4px solid var(--accent-amber);
+      color: var(--text-main);
+    }
+
+    .callout-box.success {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-left: 4px solid var(--accent-emerald);
+      color: var(--text-main);
+    }
+
+    .callout-box i {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .callout-box.info i { color: var(--accent-sky); }
+    .callout-box.warning i { color: var(--accent-amber); }
+    .callout-box.success i { color: var(--accent-emerald); }
+
+    /* ==========================================================================
+       11. OPEN QUESTIONS & CHECKLIST INTERFACE
+       ========================================================================== */
+    .questions-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .question-item {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.15s;
+    }
+
+    .question-item:hover {
+      border-color: var(--border-strong);
+    }
+
+    .question-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .question-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .question-text {
+      font-size: 13.5px;
+      color: var(--text-main);
+    }
+
+    /* Search Highlighting */
+    mark.search-highlight {
+      background: #fde047;
+      color: #000;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      z-index: 800;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* ==========================================================================
+       12. PRINT STYLESHEET (CLEAN EXECUTIVE PDF OUTPUT)
+       ========================================================================== */
+    @media print {
+      :root {
+        --bg-base: #ffffff !important;
+        --bg-surface: #ffffff !important;
+        --bg-surface-elevated: #f8fafc !important;
+        --text-main: #0f172a !important;
+        --text-muted: #475569 !important;
+        --border-subtle: #cbd5e1 !important;
+        --border-strong: #94a3b8 !important;
+        --p0-bg: #fee2e2 !important;
+        --p0-text: #b91c1c !important;
+        --table-header-bg: #f1f5f9 !important;
+      }
+      
+      .top-header, .sidebar, .back-to-top, .reading-progress-bar, .filter-pills, .btn-icon, .btn-primary {
+        display: none !important;
+      }
+
+      .app-container {
+        margin: 0 !important;
+        display: block !important;
+      }
+
+      .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      .prd-section {
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+        page-break-inside: avoid;
+        margin-bottom: 24px !important;
+      }
+
+      body {
+        background: #ffffff !important;
+        font-size: 12pt !important;
+      }
+    }
+
+    /* ==========================================================================
+       13. RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: var(--shadow-lg);
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 24px 16px 60px;
+      }
+      .sidebar-toggle-btn {
+        display: flex;
+      }
+      .search-box-container {
+        width: 180px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .search-box-container {
+        display: none;
+      }
+      .hero-title {
+        font-size: 26px;
+      }
+      .hero-banner {
+        padding: 24px 18px;
+      }
+      .prd-section {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Fixed Header -->
+  <header class="top-header">
+    <div class="reading-progress-bar" id="readingProgressBar"></div>
+    
+    <div class="brand-section">
+      <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Navigation">
+        <i data-lucide="menu" style="width:18px;height:18px;"></i>
+      </button>
+      
+      <div class="brand-logo-wrap">
+        <i data-lucide="utensils" style="width:18px;height:18px;"></i>
+      </div>
+      <div class="brand-titles">
+        <span class="brand-title">Restro Expert</span>
+        <span class="version-tag">PRD v1.0</span>
+      </div>
+    </div>
+
+    <!-- Header Actions (Theme Switcher Only) -->
+    <div class="header-actions">
+      <!-- Theme Switcher -->
+      <button class="btn-icon" id="themeToggleBtn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+        <i data-lucide="sun" id="themeIcon" style="width:17px;height:17px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container with Sidebar + Content -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebarNav">
+      <div class="sidebar-heading">Document Navigation</div>
+      <ul class="toc-list" id="tocList">
+        <li class="toc-item"><a href="#section-meta" class="active"><span class="toc-item-title"><i data-lucide="info" style="width:14px;height:14px;"></i> Overview</span> <span class="toc-badge">Doc</span></a></li>
+        <li class="toc-item"><a href="#section-1"><span class="toc-item-title"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> 1. Executive Summary</span> <span class="toc-badge">§1</span></a></li>
+        <li class="toc-item"><a href="#section-2"><span class="toc-item-title"><i data-lucide="alert-circle" style="width:14px;height:14px;"></i> 2. Problem Statement</span> <span class="toc-badge">§2</span></a></li>
+        <li class="toc-item"><a href="#section-3"><span class="toc-item-title"><i data-lucide="target" style="width:14px;height:14px;"></i> 3. Goals & Metrics</span> <span class="toc-badge">§3</span></a></li>
+        <li class="toc-item"><a href="#section-4"><span class="toc-item-title"><i data-lucide="users" style="width:14px;height:14px;"></i> 4. Users & Roles</span> <span class="toc-badge">§4</span></a></li>
+        <li class="toc-item"><a href="#section-5"><span class="toc-item-title"><i data-lucide="layers" style="width:14px;height:14px;"></i> 5. Scope & Phasing</span> <span class="toc-badge">§5</span></a></li>
+        <li class="toc-item"><a href="#section-6"><span class="toc-item-title"><i data-lucide="check-square" style="width:14px;height:14px;"></i> 6. Functional Specs</span> <span class="toc-badge">§6</span></a></li>
+        <li class="toc-item"><a href="#section-7"><span class="toc-item-title"><i data-lucide="git-merge" style="width:14px;height:14px;"></i> 7. User Flows</span> <span class="toc-badge">§7</span></a></li>
+        <li class="toc-item"><a href="#section-8"><span class="toc-item-title"><i data-lucide="database" style="width:14px;height:14px;"></i> 8. Data Model</span> <span class="toc-badge">§8</span></a></li>
+        <li class="toc-item"><a href="#section-9"><span class="toc-item-title"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> 9. Non-Functional</span> <span class="toc-badge">§9</span></a></li>
+        <li class="toc-item"><a href="#section-10"><span class="toc-item-title"><i data-lucide="credit-card" style="width:14px;height:14px;"></i> 10. Business Model</span> <span class="toc-badge">§10</span></a></li>
+        <li class="toc-item"><a href="#section-11"><span class="toc-item-title"><i data-lucide="cpu" style="width:14px;height:14px;"></i> 11. Tech Approach</span> <span class="toc-badge">§11</span></a></li>
+        <li class="toc-item"><a href="#section-12"><span class="toc-item-title"><i data-lucide="calendar" style="width:14px;height:14px;"></i> 12. Release Plan</span> <span class="toc-badge">§12</span></a></li>
+        <li class="toc-item"><a href="#section-13"><span class="toc-item-title"><i data-lucide="alert-triangle" style="width:14px;height:14px;"></i> 13. Risks & Mitigation</span> <span class="toc-badge">§13</span></a></li>
+        <li class="toc-item"><a href="#section-14"><span class="toc-item-title"><i data-lucide="help-circle" style="width:14px;height:14px;"></i> 14. Open Questions</span> <span class="toc-badge">§14</span></a></li>
+        <li class="toc-item"><a href="#section-15"><span class="toc-item-title"><i data-lucide="file-text" style="width:14px;height:14px;"></i> 15. Assumptions</span> <span class="toc-badge">§15</span></a></li>
+        <li class="toc-item"><a href="#section-16"><span class="toc-item-title"><i data-lucide="book-open" style="width:14px;height:14px;"></i> 16. Glossary</span> <span class="toc-badge">§16</span></a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <a href="#section-14" class="sidebar-quick-btn">
+          <i data-lucide="help-circle" style="width:15px;height:15px;color:var(--primary);"></i>
+          <span>14 Client Questions</span>
+        </a>
+        <a href="#section-6" class="sidebar-quick-btn">
+          <i data-lucide="list-checks" style="width:15px;height:15px;color:var(--secondary);"></i>
+          <span>Module Requirements</span>
+        </a>
+        <div style="font-size: 11px; color: var(--text-dim); text-align: center; padding-top: 6px;">
+          &copy; 2026 Aarohan Tech Solutions
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Stream -->
+    <main class="main-content">
+      <div class="content-wrapper">
+        
+        <!-- Document Meta / Hero Banner -->
+        <section id="section-meta" class="hero-banner">
+          <div class="hero-header-tags">
+            <div class="status-badge-live">
+              <span class="status-pulse"></span>
+              Draft for Client Review
+            </div>
+            <span class="version-tag">Version 1.0</span>
+            <span class="badge-p0">MVP Scope Defined</span>
+          </div>
+
+          <h1 class="hero-title">Product Requirements Document</h1>
+          <p class="hero-subtitle">Restro Expert: Restaurant Business Management and Service Marketplace</p>
+
+          <!-- Document Metadata Grid -->
+          <div class="meta-grid">
+            <div class="meta-card">
+              <span class="meta-label">Product Name</span>
+              <span class="meta-value">Restro Expert</span>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">Document Date</span>
+              <span class="meta-value">3 October 2026</span>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">Primary Platforms</span>
+              <span class="meta-value">Mobile (React Native) + Admin Web</span>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">Prepared By</span>
+              <span class="meta-value">Aarohan Tech Solutions</span>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">Source Baseline</span>
+              <span class="meta-value">Client Call (29 Sep 2026) + Brief</span>
+            </div>
+            <div class="meta-card">
+              <span class="meta-label">Copyright</span>
+              <span class="meta-value">© 2026 Aarohan Tech Solutions</span>
+            </div>
+          </div>
+
+          <!-- Vision Box -->
+          <div class="vision-callout">
+            <div class="vision-icon-wrap">
+              <i data-lucide="quote" style="width:18px;height:18px;"></i>
+            </div>
+            <div class="vision-text">
+              <strong>One-Line Vision:</strong> "One integrated platform where a restaurant can hire verified people, source trusted vendors, and manage the money, attendance, and operations behind both."
+            </div>
+          </div>
+        </section>
+
+        <!-- 1. Executive Summary -->
+        <section id="section-1" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="sparkles"></i></div>
+              <h2 class="section-title">1. Executive Summary</h2>
+            </div>
+          </div>
+
+          <p class="section-lead">
+            <strong>Restro Expert</strong> is a two-sided marketplace combined with a business-management toolkit purpose-built for the restaurant and food-service industry. It eliminates two severe everyday pain points for restaurant operators:
+          </p>
+
+          <div class="phase-grid" style="margin-bottom: 20px;">
+            <div class="phase-card">
+              <div class="phase-card-header">
+                <span class="phase-tag"><i data-lucide="user-check" style="color:var(--primary);width:18px;height:18px;vertical-align:middle;margin-right:6px;"></i> On-Demand Manpower</span>
+              </div>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">
+                Chefs, cleaners, clerks, helpers, and waiters create profiles showcasing skills, experience, and their self-set asking prices.
+              </p>
+            </div>
+            <div class="phase-card">
+              <div class="phase-card-header">
+                <span class="phase-tag"><i data-lucide="truck" style="color:var(--secondary);width:18px;height:18px;vertical-align:middle;margin-right:6px;"></i> Trusted Vendor Network</span>
+              </div>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">
+                Direct discovery and quoting for commercial cleaning, food ingredients, and wholesale suppliers with reliable lead generation.
+              </p>
+            </div>
+            <div class="phase-card">
+              <div class="phase-card-header">
+                <span class="phase-tag"><i data-lucide="bar-chart-3" style="color:var(--accent-emerald);width:18px;height:18px;vertical-align:middle;margin-right:6px;"></i> Operational Management</span>
+              </div>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">
+                One unified console to manage attendance, calculate locked-rate payouts, track invoices, and monitor operational performance.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout-box info">
+            <i data-lucide="info"></i>
+            <div>
+              <strong>Monetization & Operations:</strong> The platform company operates the marketplace with an internal operations team (verification, attendance audits, payroll, follow-ups) and monetizes primarily through <strong>Premium Access Subscriptions</strong> for restaurant owners.
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Problem Statement -->
+        <section id="section-2" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="alert-circle"></i></div>
+              <h2 class="section-title">2. Problem Statement</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th style="width: 25%;">Stakeholder</th>
+                  <th>Current Problem & Market Inefficiencies</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Restaurant Owners</strong></td>
+                  <td>Finding chefs, cleaners, and helpers relies on slow word-of-mouth or opaque agents. High no-show rates, unpredictable wage spikes, and no systematic record of who worked when.</td>
+                </tr>
+                <tr>
+                  <td><strong>Workers / Manpower</strong></td>
+                  <td>Zero direct visibility to employers, no formal way to showcase verified skills and expected pay, frequent informal payment disputes and wage delays.</td>
+                </tr>
+                <tr>
+                  <td><strong>Vendors / Suppliers</strong></td>
+                  <td>Dependent on fragmented personal connections to acquire restaurant clients with no predictable, steady inbound lead channel.</td>
+                </tr>
+                <tr>
+                  <td><strong>Platform Company</strong></td>
+                  <td>Burdened with manual WhatsApp/phone follow-ups, disparate spreadsheets for attendance and payouts, and zero telemetry on user behavior.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 3. Goals, Non-Goals and Success Metrics -->
+        <section id="section-3" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="target"></i></div>
+              <h2 class="section-title">3. Goals, Non-Goals & Success Metrics</h2>
+            </div>
+          </div>
+
+          <h3 class="subsection-title">3.1 Strategic Goals</h3>
+          <div class="questions-grid">
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">1</span>
+                <span class="question-text">Reduce the time to discover, request, and hire staff from <strong>days to hours</strong>.</span>
+              </div>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">2</span>
+                <span class="question-text">Give workers an empowering, transparent profile with their own asking price and verified credentials.</span>
+              </div>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">3</span>
+                <span class="question-text">Provide restaurant owners with an all-in-one console for worker attendance, payouts, and service billing.</span>
+              </div>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">4</span>
+                <span class="question-text">Provide commercial food and cleaning vendors with a recurring lead pipeline from local restaurants.</span>
+              </div>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">5</span>
+                <span class="question-text">Give the platform company complete operational oversight (internal staff, CRM follow-ups, user activity logs).</span>
+              </div>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">6</span>
+                <span class="question-text">Create a sustainable, scalable recurring revenue stream via premium subscriptions and placement value.</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="subsection-title">3.2 Non-Goals (v1 MVP Scope Boundaries)</h3>
+          <div class="callout-box warning">
+            <i data-lucide="alert-triangle"></i>
+            <div>
+              <ul style="padding-left:16px;display:flex;flex-direction:column;gap:6px;">
+                <li><strong>No Full E-Commerce Wholesale Cart:</strong> v1 relies on structured Quote & Service requests rather than live inventory cart checkout.</li>
+                <li><strong>No Restaurant POS / Table Billing:</strong> "Billing" in v1 strictly represents platform service invoices, worker payouts, and vendor requests.</li>
+                <li><strong>No In-App Statutory Payroll Compliance:</strong> Automated PF, ESI, and government TDS tax filings are out of scope for v1.</li>
+                <li><strong>Android-First Focus:</strong> Initial release targets Android (React Native/Expo); iOS deployment scheduled for Phase 3.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="subsection-title">3.3 Success Metrics (First 6 Months)</h3>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-metric-title">Registered Restaurants</div>
+              <div class="kpi-metric-value">200+</div>
+              <div class="kpi-metric-sub">Active restaurant onboarding</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-metric-title">Registered Workers</div>
+              <div class="kpi-metric-value">1,500+</div>
+              <div class="kpi-metric-sub">Chefs, helpers, cleaners</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-metric-title">Hire Confirmation Rate</div>
+              <div class="kpi-metric-value">≥ 50%</div>
+              <div class="kpi-metric-sub">Request to confirmed hire</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-metric-title">Median Hire Time</div>
+              <div class="kpi-metric-value">≤ 24 hrs</div>
+              <div class="kpi-metric-sub">From posting to worker accept</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-metric-title">Premium Conversion</div>
+              <div class="kpi-metric-value">≥ 10%</div>
+              <div class="kpi-metric-sub">Owner tier upgrade rate</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-metric-title">Attendance On-Time</div>
+              <div class="kpi-metric-value">≥ 90%</div>
+              <div class="kpi-metric-sub">Logged same day</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Users and Roles -->
+        <section id="section-4" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="users"></i></div>
+              <h2 class="section-title">4. Users, Personas & Permission Matrix</h2>
+            </div>
+          </div>
+
+          <h3 class="subsection-title">4.1 User Personas</h3>
+          <div class="persona-grid">
+            <div class="persona-card">
+              <div class="persona-header">
+                <div class="persona-avatar">P1</div>
+                <div class="persona-info">
+                  <span class="persona-code">PRIMARY CUSTOMER</span>
+                  <span class="persona-name">Rakesh (Restaurant Owner)</span>
+                </div>
+              </div>
+              <p class="persona-desc">
+                Runs a 30-seat restaurant. Needs replacement cooks on short notice and weekly deep cleaning. Wants price transparency, no-show protection, and regional language support (Hindi/Bengali/English).
+              </p>
+            </div>
+
+            <div class="persona-card">
+              <div class="persona-header">
+                <div class="persona-avatar" style="background:var(--secondary-light);color:var(--secondary);">P2</div>
+                <div class="persona-info">
+                  <span class="persona-code">SUPPLY SIDE</span>
+                  <span class="persona-name">Sunita (Kitchen Staff / Worker)</span>
+                </div>
+              </div>
+              <p class="persona-desc">
+                Experienced kitchen helper. Wants to publish skills, set her expected daily rate, receive hire requests, and be paid accurately on time with a clear attendance record.
+              </p>
+            </div>
+
+            <div class="persona-card">
+              <div class="persona-header">
+                <div class="persona-avatar" style="background:rgba(16, 185, 129, 0.12);color:var(--accent-emerald);">P3</div>
+                <div class="persona-info">
+                  <span class="persona-code">SERVICE PROVIDER</span>
+                  <span class="persona-name">Fresh Farm Suppliers (Vendor)</span>
+                </div>
+              </div>
+              <p class="persona-desc">
+                Supplies wholesale vegetables and commercial cleaning services. Needs verified restaurant leads, quote request management, and direct order fulfillment tracking.
+              </p>
+            </div>
+
+            <div class="persona-card">
+              <div class="persona-header">
+                <div class="persona-avatar" style="background:rgba(139, 92, 246, 0.12);color:var(--accent-purple);">P4</div>
+                <div class="persona-info">
+                  <span class="persona-code">INTERNAL TEAM</span>
+                  <span class="persona-name">Operations Executive (Staff)</span>
+                </div>
+              </div>
+              <p class="persona-desc">
+                Verifies worker credentials, assists in matching open requests, handles follow-ups, and logs their own internal attendance and payroll slips.
+              </p>
+            </div>
+
+            <div class="persona-card">
+              <div class="persona-header">
+                <div class="persona-avatar" style="background:rgba(244, 63, 94, 0.12);color:var(--accent-rose);">P5</div>
+                <div class="persona-info">
+                  <span class="persona-code">SYSTEM GOVERNANCE</span>
+                  <span class="persona-name">Platform Admin</span>
+                </div>
+              </div>
+              <p class="persona-desc">
+                Full administrative control over user verification, master data, subscription tiers, commission configuration, reports, and content moderation.
+              </p>
+            </div>
+          </div>
+
+          <h3 class="subsection-title">4.2 Role & Permission Matrix</h3>
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th>Platform Capability</th>
+                  <th>Owner (P1)</th>
+                  <th>Worker (P2)</th>
+                  <th>Vendor (P3)</th>
+                  <th>Staff (P4)</th>
+                  <th>Admin (P5)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Register / Maintain Profile</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                  <td>By Admin</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                </tr>
+                <tr>
+                  <td>Browse Worker Directory</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                </tr>
+                <tr>
+                  <td>Create Staff Request / Hire</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                  <td>Accept / Decline</td>
+                  <td><span class="check-no">No</span></td>
+                  <td>Assist / Manage</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Full</span></td>
+                </tr>
+                <tr>
+                  <td>Vendor Discovery & Quotes</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Send Request</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Respond</span></td>
+                  <td>View</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Full</span></td>
+                </tr>
+                <tr>
+                  <td>Mark Worker Attendance</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes (Daily)</span></td>
+                  <td>Check-in (Confirm)</td>
+                  <td><span class="check-no">No</span></td>
+                  <td>Override</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                </tr>
+                <tr>
+                  <td>Approve Payouts</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Own Workers</span></td>
+                  <td>View Own</td>
+                  <td><span class="check-no">No</span></td>
+                  <td>Process</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Yes</span></td>
+                </tr>
+                <tr>
+                  <td>Invoices & Billing</td>
+                  <td>Own Spend</td>
+                  <td>Own Earnings</td>
+                  <td>Own Quotes</td>
+                  <td>All Orders</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> All Invoices</span></td>
+                </tr>
+                <tr>
+                  <td>Internal HR / CRM Follow-ups</td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td>Assigned Tasks</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Manage All</span></td>
+                </tr>
+                <tr>
+                  <td>Customer Activity Dashboard</td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-no">No</span></td>
+                  <td>Assigned View</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Full Telemetry</span></td>
+                </tr>
+                <tr>
+                  <td>Manage Premium Subscriptions</td>
+                  <td>Purchase / Renew</td>
+                  <td><span class="check-no">No</span></td>
+                  <td>Optional Vendor Plan</td>
+                  <td><span class="check-no">No</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Plan Config</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. Scope and Phasing -->
+        <section id="section-5" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="layers"></i></div>
+              <h2 class="section-title">5. Scope & Product Phasing</h2>
+            </div>
+          </div>
+
+          <div class="phase-grid">
+            <div class="phase-card phase-mvp">
+              <div class="phase-card-header">
+                <span class="phase-tag">Phase 1: MVP Core</span>
+                <span class="phase-duration">10 – 12 Weeks</span>
+              </div>
+              <ul class="phase-list">
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Mobile OTP Auth & role onboarding</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Worker profiles with self-set rates & ID verification</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Owner browse, filters, direct hire & open requests</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Vendor directory with quote & service requests</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Worker attendance marking & payout ledger</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Premium subscription gateway (Razorpay)</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Admin panel: verification, requests, KPI reports</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Internal staff attendance, payroll view & follow-ups</li>
+                <li><i data-lucide="check-circle-2" style="width:15px;height:15px;"></i> Customer activity monitoring & Push notifications</li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <div class="phase-card-header">
+                <span class="phase-tag">Phase 2: Scale & Payments</span>
+                <span class="phase-duration">Subsequent</span>
+              </div>
+              <ul class="phase-list">
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Multi-location restaurant outlet switching</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Automated UPI/Bank payouts to workers with escrow</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Repeat vendor orders & live delivery tracking</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> QR-code / Geo-fenced restaurant check-in</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Real-time in-app chat between Owner & Worker/Vendor</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Automated GST-compliant PDF invoice export</li>
+              </ul>
+            </div>
+
+            <div class="phase-card">
+              <div class="phase-card-header">
+                <span class="phase-tag">Phase 3: Intelligence & Ecosystem</span>
+                <span class="phase-duration">Future</span>
+              </div>
+              <ul class="phase-list">
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Native iOS App & Web App for Owners</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> AI-powered smart worker matching & demand forecasting</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Shift scheduling algorithms & certification badges</li>
+                <li><i data-lucide="circle" style="width:14px;height:14px;color:var(--text-dim);"></i> Worker loyalty, health insurance & micro-credit perks</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. Functional Requirements (Modules A to I) -->
+        <section id="section-6" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="check-square"></i></div>
+              <h2 class="section-title">6. Functional Requirements Specification</h2>
+            </div>
+          </div>
+
+          <!-- Module A -->
+          <h3 class="subsection-title">6.1 Module A: Onboarding, Accounts & Verification</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-1</span></td>
+                  <td>User registration & authentication via Mobile Number + SMS OTP verification.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-2</span></td>
+                  <td>Role selection on initial onboarding: <strong>Restaurant Owner</strong>, <strong>Worker</strong>, or <strong>Vendor</strong>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-3</span></td>
+                  <td><strong>Owner Profile:</strong> Restaurant name, type (Café, Dhaba, Fine Dining, Cloud Kitchen), full address/city, contact person, GSTIN (optional), and brand logo.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-4</span></td>
+                  <td><strong>Worker Profile:</strong> Photo, full name, age, city/area, primary role(s), years of experience, expected rate with unit (per day / per hour / per month), shift availability, spoken languages, past work history, and ID document upload.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-5</span></td>
+                  <td><strong>Vendor Profile:</strong> Business name, primary category (Cleaning, Food Supplies, Wholesale), service coverage area, catalog items/services with indicative rates, contact info, and business license/GST.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-6</span></td>
+                  <td><strong>Verification System:</strong> Status workflow (<code>Unverified</code> → <code>Verified</code> by company staff review). Only verified workers/vendors display the trust badge.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">A-7</span></td>
+                  <td>Admin account moderation: Approve, reject, suspend, or flag accounts with mandatory audit reason logging.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">A-8</span></td>
+                  <td>Multi-language interface support: <strong>English, Hindi, Bengali</strong> for seamless regional adoption.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">A-9</span></td>
+                  <td>Multiple restaurant outlets and branch switching under a single owner account.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module B -->
+          <h3 class="subsection-title">6.2 Module B: Manpower Marketplace (Request, Hire, Track)</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-1</span></td>
+                  <td>Owner worker search and discovery filters: Role (Chef, Cleaner, Waiter, Helper), City/locality, Rate budget, Experience, Rating score, Date availability, and Verified-only filter.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-2</span></td>
+                  <td>Worker Profile Card: Photo, verified badge, roles, experience, asking rate, star rating, availability calendar preview.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">B-3</span></td>
+                  <td>Shortlist & bookmark favorite worker profiles for quick re-hiring.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-4</span></td>
+                  <td><strong>Direct Hire Offer:</strong> Owner sends a formal job offer to a specific worker (role, start/end dates, shift timings, locked agreed rate, location, instructions). Worker accepts or declines within 12h expiry.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-5</span></td>
+                  <td><strong>Open Staff Request:</strong> Owner posts a broadcast requirement (role, head count, dates, shift, budget). Matched candidates are notified or matched by staff.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">B-6</span></td>
+                  <td>Single counter-offer wage negotiation; final locked rate is permanently recorded in the hire contract.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-7</span></td>
+                  <td>Hire lifecycle status machine: <code>Requested → Offered → Accepted → Active → Completed / Cancelled / No-show</code>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-8</span></td>
+                  <td>"My Workers" dashboard: Active crew roster, real-time attendance status, and pending payout summaries.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">B-9</span></td>
+                  <td>Two-way rating & review system after completion of hire period.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">B-10</span></td>
+                  <td>Configurable cancellation penalties and no-show dispute penalties.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">B-11</span></td>
+                  <td>Worker availability toggle (Available / On Leave / Custom unavailable calendar dates).</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">B-12</span></td>
+                  <td>Masked phone contact until a hire request is accepted to prevent off-platform bypass.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module C -->
+          <h3 class="subsection-title">6.3 Module C: Vendor & Service Connections</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">C-1</span></td>
+                  <td>Vendor Directory categorized by <strong>Commercial Cleaning</strong>, <strong>Food Ingredients</strong>, and <strong>Wholesale Supplies</strong>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">C-2</span></td>
+                  <td>Vendor search & filter by category, service radius, rating score, and price indicative hints.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">C-3</span></td>
+                  <td>Vendor profile page: Company description, service list, price hints, coverage radius, past customer reviews.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">C-4</span></td>
+                  <td><strong>Structured Quote / Service Request:</strong> Owner specifies required items/services, quantity, target date, and delivery notes.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">C-5</span></td>
+                  <td>Vendor quote response (quoted price, delivery date, quote validity). Owner accepts or rejects.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">C-6</span></td>
+                  <td>Job / order tracking: <code>Quoted → Accepted → Fulfilled → Closed</code>.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">C-7</span></td>
+                  <td>Vendor rating and feedback after order fulfillment.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">C-8</span></td>
+                  <td>Full automated cart checkout, payment escrow, and real-time live delivery tracking.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module D -->
+          <h3 class="subsection-title">6.4 Module D: Billing & Invoicing</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">D-1</span></td>
+                  <td>Consolidated invoice generation for: Manpower services, Vendor orders, and Premium subscriptions.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">D-2</span></td>
+                  <td>Standard invoice metadata: Unique Invoice #, Issuer, Recipient, Itemized breakdown, GST %, Total amount, Due date, and Status.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">D-3</span></td>
+                  <td>Invoice lifecycle states: <code>Draft → Sent → Paid → Overdue → Cancelled</code>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">D-4</span></td>
+                  <td>Manual & automated payment logging (Cash, UPI, Card, Net Banking).</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">D-5</span></td>
+                  <td>Owner Billing Dashboard: Total monthly expenditure, outstanding dues, and upcoming invoices.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">D-6</span></td>
+                  <td>Downloadable PDF invoices with 1-click WhatsApp and Email share capabilities.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">D-7</span></td>
+                  <td>Automated payment reminder notifications before and after due date.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">D-8</span></td>
+                  <td>Automated GST-compliant reconciliation reports and GSTR-1 export formats.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module E -->
+          <h3 class="subsection-title">6.5 Module E: Worker Attendance & Payout</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">E-1</span></td>
+                  <td>Daily attendance status flags per worker: <code>Present</code>, <code>Half-day</code>, <code>Absent</code>, <code>Leave</code>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">E-2</span></td>
+                  <td>Daily attendance marking from "My Workers" roster with quick "Mark All Present" batch action.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">E-3</span></td>
+                  <td>Worker mobile check-in / check-out with timestamp logging for owner verification.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">E-4</span></td>
+                  <td>Restaurant QR-code scanning or Geo-fenced perimeter check-in validation.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">E-5</span></td>
+                  <td>Monthly attendance calendar grid view with monthly present/half-day/absent aggregates.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">E-6</span></td>
+                  <td><strong>Deterministic Payout Calculation:</strong> <code>Payout = (Present Days × Rate) + (Half Days × 0.5 × Rate) + Overtime − Deductions</code>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">E-7</span></td>
+                  <td>Payout status tracking: <code>Pending → Approved → Paid / Disputed</code>.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">E-8</span></td>
+                  <td>Worker personal earnings dashboard: earned amount, logged days, payment history.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">E-9</span></td>
+                  <td>Worker wage/attendance dispute ticket flow with company staff mediation console.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">E-10</span></td>
+                  <td>Transparent platform commission/convenience fee breakdown displayed on payout calculation.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">E-11</span></td>
+                  <td>Direct in-app automated bank/UPI disbursement to worker accounts via payment gateway.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module F -->
+          <h3 class="subsection-title">6.6 Module F: Internal Staff Management & CRM Tasks</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">F-1</span></td>
+                  <td>Internal employee roster: Full name, assigned operational role, contact, joining date, status.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">F-2</span></td>
+                  <td>Staff attendance: daily mobile check-in/out and leave request submission/approval workflow.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">F-3</span></td>
+                  <td>Staff payroll summary: Base salary, allowances, deductions, net payout, and payslip generator.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">F-4</span></td>
+                  <td><strong>CRM Follow-ups Engine:</strong> Task records linked to Restaurant, Worker, Vendor, or Invoice (Title, linked entity, assignee, due date, priority, status: <code>Open / In Progress / Done</code>, notes).</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">F-5</span></td>
+                  <td>Follow-up reminder alarms, overdue task alerts, and daily morning briefing digests for agents.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">F-6</span></td>
+                  <td>Automated task creation triggers: Overdue invoice > 48h, unfilled hire request > 24h, expiring premium plan.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">F-7</span></td>
+                  <td>Staff KPI productivity reporting: completed follow-ups, candidate verification turnaround, fulfilled hires.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module G -->
+          <h3 class="subsection-title">6.7 Module G: Customer Activity Dashboard & Telemetry</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">G-1</span></td>
+                  <td>Business activity audit log: Login, logout, profile edits, search queries, hire offers, quote requests, invoice views, premium purchases.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">G-2</span></td>
+                  <td>Activity Dashboard: Last active timestamp, weekly active sessions, top engaged features per restaurant.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">G-3</span></td>
+                  <td>Filters by customer entity, date range, action category, and geographic city.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">G-4</span></td>
+                  <td>Customer Detail Timeline: Sequential chronological feed of every action taken by an account.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">G-5</span></td>
+                  <td>Dormant user filter (no session in 14+ days) to automatically trigger re-engagement CRM follow-ups.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">G-6</span></td>
+                  <td>Conversion funnel telemetry: Signup → First Search → First Hire Offer → Confirmed Hire → Premium.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+                <tr data-priority="P2">
+                  <td><span class="req-id">G-7</span></td>
+                  <td>Activity dataset export to CSV / Excel.</td>
+                  <td><span class="badge-p2">P2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module H -->
+          <h3 class="subsection-title">6.8 Module H: Premium Access Subscriptions</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">H-1</span></td>
+                  <td>Tiered access structure: <strong>Free Tier</strong> vs. <strong>Premium Tier</strong> for Restaurant Owners.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">H-2</span></td>
+                  <td>Billing frequency plans: Monthly, Quarterly, and Annual billing options.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">H-3</span></td>
+                  <td>Payment gateway checkout (Razorpay) with instant automated invoice generation upon success.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">H-4</span></td>
+                  <td>Subscription lifecycle management: Expiry date calculation, renewal alerts, manual renewal flow.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">H-5</span></td>
+                  <td>Feature gating engine: lock badges, upgrade modals on restricted features for Free accounts.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Feature comparison table -->
+          <h4 style="font-size:14px;font-weight:600;margin:16px 0 8px;color:var(--text-main);">Tier Feature Entitlement Comparison</h4>
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th>Feature Capability</th>
+                  <th style="width: 200px;">Free Tier</th>
+                  <th style="width: 200px;">Premium Tier</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Browse Worker & Vendor Directory</td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Full Access</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Full Access</span></td>
+                </tr>
+                <tr>
+                  <td>Active Concurrent Hire Requests</td>
+                  <td>Up to 2 concurrent</td>
+                  <td><strong>Unlimited</strong></td>
+                </tr>
+                <tr>
+                  <td>Priority Worker Matching & Placement</td>
+                  <td><span class="check-no">Standard Queue</span></td>
+                  <td><strong style="color:var(--primary);">Priority Dispatch</strong></td>
+                </tr>
+                <tr>
+                  <td>Direct Worker Contact Reveal</td>
+                  <td>Only after accepted hire</td>
+                  <td>Pre-hire reveal credits</td>
+                </tr>
+                <tr>
+                  <td>Attendance & Payout Ledger</td>
+                  <td>Basic daily roster</td>
+                  <td>Advanced export & custom reports</td>
+                </tr>
+                <tr>
+                  <td>Monthly Vendor Quote Requests</td>
+                  <td>Up to 5 per month</td>
+                  <td><strong>Unlimited</strong></td>
+                </tr>
+                <tr>
+                  <td>Dedicated Account Manager</td>
+                  <td><span class="check-no">Self-service</span></td>
+                  <td><span class="check-yes"><i data-lucide="check" style="width:14px;height:14px;"></i> Dedicated Support</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Module I -->
+          <h3 class="subsection-title">6.9 Module I: Platform Admin Console & Master Data</h3>
+          <div class="table-responsive">
+            <table class="prd-table req-table">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">Req ID</th>
+                  <th>Feature Requirement Specification</th>
+                  <th style="width: 100px;">Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-priority="P0">
+                  <td><span class="req-id">I-1</span></td>
+                  <td>Executive KPI Dashboard: Real-time user metrics, open requests, active hires, GMV, and subscription revenue.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">I-2</span></td>
+                  <td>User Management Hub: Verification approval queue, status toggles, user suspensions, role modifications.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">I-3</span></td>
+                  <td>Internal Staff Administration: Create employee accounts and assign granular role permissions.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">I-4</span></td>
+                  <td>Marketplace Operations Console: Oversight of open requests with manual candidate assignment capability.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P0">
+                  <td><span class="req-id">I-5</span></td>
+                  <td>Master Data Configuration: Category lists, skill sets, serviced cities, tax rates (GST %), and platform fee rules.</td>
+                  <td><span class="badge-p0">P0</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">I-6</span></td>
+                  <td>Subscription Plan Pricing & Coupon Code Management.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">I-7</span></td>
+                  <td>Content & Dispute Moderation: Review flagged user reports, ratings, and attendance disputes.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+                <tr data-priority="P1">
+                  <td><span class="req-id">I-8</span></td>
+                  <td>Immutable audit log of all administrative actions and security overrides.</td>
+                  <td><span class="badge-p1">P1</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Cross-cutting Notifications -->
+          <h3 class="subsection-title">6.10 Cross-Cutting: Notification Engine</h3>
+          <div class="callout-box info">
+            <i data-lucide="bell"></i>
+            <div>
+              <strong>Multi-Channel Alerts (FCM Push + In-App + SMS/WhatsApp):</strong>
+              Triggers for critical events: New hire offer received, Offer accepted/declined, Job starting in 24h, Daily attendance not logged, Payout approved, Invoice due/overdue, Premium expiring in 3 days, Assigned CRM follow-up overdue.
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. Key User Flows -->
+        <section id="section-7" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="git-merge"></i></div>
+              <h2 class="section-title">7. Key End-to-End User Flows</h2>
+            </div>
+          </div>
+
+          <p class="section-lead">The step-by-step operational workflows powering the core user journeys in Restro Expert:</p>
+
+          <div class="flow-stepper">
+            <div class="flow-step">
+              <div class="flow-step-num">1</div>
+              <div class="flow-step-text">
+                <strong>Worker Onboarding & Verification:</strong>
+                OTP Verification → Select "Worker" Role → Build Profile & Set Asking Rate → Upload Aadhaar/ID Document → Ops Staff Reviews & Approves → Status changes to <code class="code-pill">Verified</code> → Profile live in marketplace search.
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-step-num">2</div>
+              <div class="flow-step-text">
+                <strong>Direct Manpower Hire (Happy Path):</strong>
+                Owner filters "Chef, Kolkata, ₹1,200/day" → Views profile → Taps "Hire" with specified dates & shift → Worker gets push alert and taps "Accept" → Contract status becomes <code class="code-pill">Active</code> → Daily attendance tracked → Last day reached → Payout calculated → Owner approves & both parties submit star ratings.
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-step-num">3</div>
+              <div class="flow-step-text">
+                <strong>Broadcast Open Staff Requirement:</strong>
+                Owner posts "Need 3 Waiters for Saturday Dinner" → System matches local available waiters → Ops staff reviews & confirms candidates → Owner confirms selection → 3 Hire records automatically instantiated.
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-step-num">4</div>
+              <div class="flow-step-text">
+                <strong>Vendor Quote & Service Delivery:</strong>
+                Owner selects "Wholesale Food Supplies" → Submits item requirements list → Vendor responds with itemized quote → Owner accepts quote → Vendor delivers supplies → Digital invoice generated & marked settled.
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-step-num">5</div>
+              <div class="flow-step-text">
+                <strong>Premium Subscription Upgrade:</strong>
+                Owner encounters gated feature (e.g., direct contact credits) → Selects Quarterly Premium Plan → Pays via Razorpay → Premium badge instantly activated with auto-generated tax invoice.
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-step-num">6</div>
+              <div class="flow-step-text">
+                <strong>Internal Operational CRM Follow-up:</strong>
+                Invoice overdue > 48h triggers automated follow-up ticket → Assigned to Operations Executive → Staff member contacts restaurant owner → Records call outcome notes → Updates ticket to <code class="code-pill">Resolved</code>.
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <div class="flow-step-num">7</div>
+              <div class="flow-step-text">
+                <strong>Dormant User Re-Engagement:</strong>
+                Customer Activity Dashboard flags 14-day dormant restaurants → Operations team initiates assisted hiring outreach to drive retention.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. Data Model -->
+        <section id="section-8" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="database"></i></div>
+              <h2 class="section-title">8. High-Level Data Model Architecture</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th style="width: 220px;">Entity Name</th>
+                  <th>Core Schema Attributes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code class="code-pill">User</code></td>
+                  <td><code>id, phone, name, role [OWNER|WORKER|VENDOR|STAFF|ADMIN], status, language, created_at</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">OwnerProfile</code></td>
+                  <td><code>user_id, restaurant_name, type, address, city, gst_no, logo_url, plan_tier, premium_expiry</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">WorkerProfile</code></td>
+                  <td><code>user_id, roles[], experience_years, rate, rate_unit, availability_status, city, verification_status, rating_avg</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">VendorProfile</code></td>
+                  <td><code>user_id, business_name, category, service_area, catalog_items[], verification_status, rating_avg</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">StaffRequest</code></td>
+                  <td><code>id, owner_id, role, worker_count, start_date, end_date, shift, budget_max, status</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Hire</code></td>
+                  <td><code>id, request_id, owner_id, worker_id, agreed_rate, start_date, end_date, shift, status [REQUESTED|ACCEPTED|ACTIVE|COMPLETED]</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Attendance</code></td>
+                  <td><code>id, hire_id, date, status [PRESENT|HALF_DAY|ABSENT|LEAVE], check_in_time, check_out_time, marked_by, approved_by</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Payout</code></td>
+                  <td><code>id, hire_id, period_start, period_end, gross_amount, deductions, platform_fee, net_payout, status, payment_ref</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">VendorQuote</code></td>
+                  <td><code>id, owner_id, vendor_id, item_specs, quoted_amount, delivery_date, validity_date, status</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Invoice</code></td>
+                  <td><code>id, invoice_number, type [HIRE|VENDOR|SUBSCRIPTION], issuer_id, recipient_id, line_items[], tax_gst, total, status</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Subscription</code></td>
+                  <td><code>id, owner_id, plan_id, start_date, end_date, amount, status, gateway_payment_id</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Rating</code></td>
+                  <td><code>id, from_user_id, to_user_id, hire_id, star_score [1-5], review_text, created_at</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">InternalEmployee</code></td>
+                  <td><code>id, user_id, department, base_salary, joining_date, employment_status</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">FollowUp</code></td>
+                  <td><code>id, title, entity_type, entity_id, assignee_id, due_date, priority [LOW|MED|HIGH], status [OPEN|IN_PROGRESS|DONE], notes</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">ActivityLog</code></td>
+                  <td><code>id, user_id, action_type, metadata_json, ip_address, timestamp</code></td>
+                </tr>
+                <tr>
+                  <td><code class="code-pill">Notification</code></td>
+                  <td><code>id, user_id, type, title, message, action_link, is_read, created_at</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 9. Non-Functional Requirements -->
+        <section id="section-9" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="shield-check"></i></div>
+              <h2 class="section-title">9. Non-Functional Requirements (NFRs)</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th style="width: 180px;">Dimension</th>
+                  <th>Engineering Specification & Benchmark</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Performance</strong></td>
+                  <td>Screen transition times ≤ 2 seconds on standard 4G mobile networks; backend API p95 response time ≤ 500 ms.</td>
+                </tr>
+                <tr>
+                  <td><strong>Scalability</strong></td>
+                  <td>Architecture must sustain 10,000 registered users and 500 concurrent active sessions at initial launch without re-architecture.</td>
+                </tr>
+                <tr>
+                  <td><strong>Availability</strong></td>
+                  <td>99.5% operational uptime SLA with automated multi-zone failover.</td>
+                </tr>
+                <tr>
+                  <td><strong>Security</strong></td>
+                  <td>Mandatory HTTPS/TLS 1.3 encryption, JWT auth with short-lived tokens, encrypted storage for identification documents, rate-limiting on sensitive endpoints.</td>
+                </tr>
+                <tr>
+                  <td><strong>Privacy & DPDP</strong></td>
+                  <td>Compliance with the <strong>India Digital Personal Data Protection (DPDP) Act 2023</strong>. Explicit consent capture and localized secure data handling.</td>
+                </tr>
+                <tr>
+                  <td><strong>Usability</strong></td>
+                  <td>Large-touch targets optimized for low-tech literacy, icon-led navigation, and regional voice-assisted prompts where possible.</td>
+                </tr>
+                <tr>
+                  <td><strong>Offline Tolerance</strong></td>
+                  <td>Local SQLite caching for attendance logs to allow offline roster marking with automatic sync upon network reconnection.</td>
+                </tr>
+                <tr>
+                  <td><strong>Device Support</strong></td>
+                  <td>Android 8.0 (API Level 26) and above for MVP mobile client.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 10. Business Model & Money Flow Decision -->
+        <section id="section-10" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="credit-card"></i></div>
+              <h2 class="section-title">10. Business Model & Money-Flow Decision</h2>
+            </div>
+          </div>
+
+          <p class="section-lead">The platform supports four complementary revenue streams with three architectural money-flow models:</p>
+
+          <div class="phase-grid" style="margin-bottom: 24px;">
+            <div class="phase-card">
+              <span class="phase-tag">1. Premium Subscriptions</span>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Recurring monthly/annual fee from restaurant owners for unlimited hires, priority placement, and advanced reports.</p>
+            </div>
+            <div class="phase-card">
+              <span class="phase-tag">2. Marketplace Commission</span>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Percentage or flat fee on confirmed worker shifts and vendor fulfillment orders.</p>
+            </div>
+            <div class="phase-card">
+              <span class="phase-tag">3. Vendor Listing / Leads</span>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Featured placement fees and qualified commercial lead package fees for suppliers.</p>
+            </div>
+            <div class="phase-card">
+              <span class="phase-tag">4. Managed Staffing Fee</span>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:6px;">Value-added placement fee when company internal staff manually sources and matches workers.</p>
+            </div>
+          </div>
+
+          <h3 class="subsection-title">Money-Flow Decision Matrix for Client</h3>
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th>Model Option</th>
+                  <th>Operational Mechanism</th>
+                  <th>Strategic Pros</th>
+                  <th>Key Trade-offs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:rgba(249,115,22,0.06);">
+                  <td><strong>Model A: Direct Pay (Recommended for MVP)</strong></td>
+                  <td>Restaurant owner pays worker directly in cash/UPI. Platform functions as the <strong>attendance & payout calculation ledger</strong>.</td>
+                  <td>Lowest regulatory & compliance friction, rapid time-to-market.</td>
+                  <td>Requires honor-system or subscription gating for monetization.</td>
+                </tr>
+                <tr>
+                  <td><strong>Model B: Platform Escrow</strong></td>
+                  <td>Restaurant pays platform in advance. Platform settles to worker post-attendance deduction.</td>
+                  <td>Direct monetization capture, eliminates worker wage disputes.</td>
+                  <td>Higher banking integration and payment escrow overhead.</td>
+                </tr>
+                <tr>
+                  <td><strong>Model C: Agency of Record</strong></td>
+                  <td>Company operates as the formal employer of record and invoices restaurants on corporate terms.</td>
+                  <td>Maximum revenue per placement, total operational lock-in.</td>
+                  <td>Heavy labor law compliance, PF/ESI liability, legal footprint.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout-box success">
+            <i data-lucide="check-circle-2"></i>
+            <div>
+              <strong>Strategic Recommendation:</strong> Launch MVP with <strong>Model A (Ledger & Subscriptions)</strong> to establish network density quickly with minimal friction, transitioning to <strong>Model B (Integrated Escrow)</strong> in Phase 2.
+            </div>
+          </div>
+        </section>
+
+        <!-- 11. Technical Approach -->
+        <section id="section-11" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="cpu"></i></div>
+              <h2 class="section-title">11. Suggested Technical Architecture</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th style="width: 220px;">Architecture Layer</th>
+                  <th>Recommended Technology Stack</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Mobile Application</strong></td>
+                  <td><code class="code-pill">React Native</code> + <code class="code-pill">Expo</code> + <code class="code-pill">TypeScript</code>, Zustand State Management, i18n localization.</td>
+                </tr>
+                <tr>
+                  <td><strong>Admin Web Console</strong></td>
+                  <td><code class="code-pill">Next.js / React</code> with modern component library and role-based route guards.</td>
+                </tr>
+                <tr>
+                  <td><strong>Backend Services</strong></td>
+                  <td><code class="code-pill">Node.js (NestJS / Express)</code> RESTful APIs with structured service layers.</td>
+                </tr>
+                <tr>
+                  <td><strong>Database Layer</strong></td>
+                  <td><code class="code-pill">PostgreSQL</code> (strongly recommended for transactional ledger, attendance, and billing integrity).</td>
+                </tr>
+                <tr>
+                  <td><strong>Authentication</strong></td>
+                  <td>SMS OTP via MSG91 / Firebase Auth with secure JWT session handling.</td>
+                </tr>
+                <tr>
+                  <td><strong>Payment Gateway</strong></td>
+                  <td><code class="code-pill">Razorpay</code> for subscription checkout, webhooks, and invoice payment capture.</td>
+                </tr>
+                <tr>
+                  <td><strong>Asset Storage</strong></td>
+                  <td>AWS S3 / Cloudinary for secure worker ID verification documents and brand logos.</td>
+                </tr>
+                <tr>
+                  <td><strong>Cloud & Hosting</strong></td>
+                  <td>AWS / Render / Railway with GitHub Actions automated CI/CD pipelines.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 12. Release Plan -->
+        <section id="section-12" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="calendar"></i></div>
+              <h2 class="section-title">12. Release & Execution Plan</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th style="width: 180px;">Milestone Phase</th>
+                  <th style="width: 100px;">Duration</th>
+                  <th>Core Engineering Deliverables</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Phase 0: Discovery & UX</strong></td>
+                  <td>2 Weeks</td>
+                  <td>PRD sign-off, Figma design system, clickable UX prototype, tech architecture specs.</td>
+                </tr>
+                <tr>
+                  <td><strong>Phase 1: Foundation</strong></td>
+                  <td>2 Weeks</td>
+                  <td>Auth OTP engine, role onboarding flows, Postgres DB schema, Admin skeleton, CI pipelines.</td>
+                </tr>
+                <tr>
+                  <td><strong>Phase 2: Manpower Engine</strong></td>
+                  <td>3 Weeks</td>
+                  <td>Worker directory search, filters, direct hire & open request lifecycle, push alerts.</td>
+                </tr>
+                <tr>
+                  <td><strong>Phase 3: Vendors & Billing</strong></td>
+                  <td>2 Weeks</td>
+                  <td>Vendor profiles, quote engine, invoice creation, spend dashboard.</td>
+                </tr>
+                <tr>
+                  <td><strong>Phase 4: Attendance & Payout</strong></td>
+                  <td>2 Weeks</td>
+                  <td>Daily attendance roster, payout calculations, wage ledger, dispute workflows.</td>
+                </tr>
+                <tr>
+                  <td><strong>Phase 5: Staff, CRM & Premium</strong></td>
+                  <td>2 Weeks</td>
+                  <td>Internal staff console, follow-up CRM, telemetry tracking, Razorpay subscriptions.</td>
+                </tr>
+                <tr>
+                  <td><strong>Phase 6: Pilot UAT & Launch</strong></td>
+                  <td>2 Weeks</td>
+                  <td>Closed pilot with 5–10 restaurants, bug triage, performance tuning, Play Store launch.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 13. Risks and Mitigations -->
+        <section id="section-13" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="alert-triangle"></i></div>
+              <h2 class="section-title">13. Risk Assessment & Mitigations</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th>Identified Risk Factor</th>
+                  <th style="width: 90px;">Impact</th>
+                  <th>Actionable Mitigation Strategy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Supply Cold-Start (Chicken & Egg)</strong></td>
+                  <td><span class="badge-p0">High</span></td>
+                  <td>Seed supply first: Pre-onboard and verify 100+ local workers and top vendors via ops team before onboarding restaurants.</td>
+                </tr>
+                <tr>
+                  <td><strong>Platform Bypass (Off-Platform Hires)</strong></td>
+                  <td><span class="badge-p0">High</span></td>
+                  <td>Mask contact numbers prior to hire acceptance; offer premium attendance, payout records, and verified guarantees that incentivize staying on-platform.</td>
+                </tr>
+                <tr>
+                  <td><strong>Worker No-Shows & Reliability</strong></td>
+                  <td><span class="badge-p0">High</span></td>
+                  <td>Two-way rating algorithms, strict no-show penalties, automated standby replacement candidate alerts.</td>
+                </tr>
+                <tr>
+                  <td><strong>Fraudulent Profiles & Credentials</strong></td>
+                  <td><span class="badge-p1">Medium</span></td>
+                  <td>Mandatory government ID document upload + human staff verification before "Verified" badge issuance.</td>
+                </tr>
+                <tr>
+                  <td><strong>Wage & Attendance Disputes</strong></td>
+                  <td><span class="badge-p1">Medium</span></td>
+                  <td>Locked agreement contracts, daily attendance sign-off, and internal staff dispute arbitration portal.</td>
+                </tr>
+                <tr>
+                  <td><strong>Low Digital Literacy</strong></td>
+                  <td><span class="badge-p1">Medium</span></td>
+                  <td>Ultra-simple large UI buttons, regional languages (Hindi, Bengali), and voice/staff-assisted onboarding.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 14. Open Questions for the Client -->
+        <section id="section-14" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="help-circle"></i></div>
+              <h2 class="section-title">14. Prioritized Open Questions for Client Review</h2>
+            </div>
+          </div>
+
+          <p class="section-lead">The following 14 strategic decisions require client confirmation to finalize implementation specifications:</p>
+
+          <div class="questions-grid">
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">1</span>
+                <span class="question-text"><strong>Payout Flow:</strong> Does the restaurant pay workers directly, or does the platform collect and disburse wages?</span>
+              </div>
+              <span class="badge-p0">Critical</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">2</span>
+                <span class="question-text"><strong>Billing Scope:</strong> What does "Billing" encompass: platform fees only, vendor supplies, or worker service invoices?</span>
+              </div>
+              <span class="badge-p0">Critical</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">3</span>
+                <span class="question-text"><strong>Vendor Marketplace Model:</strong> Is vendor interaction a quote/lead channel or a full in-app checkout catalog?</span>
+              </div>
+              <span class="badge-p0">Critical</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">4</span>
+                <span class="question-text"><strong>Revenue Strategy:</strong> What is the monetization balance between subscriptions, placement fees, and commissions?</span>
+              </div>
+              <span class="badge-p0">Critical</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">5</span>
+                <span class="question-text"><strong>Subscription Pricing:</strong> What are the initial price points for Monthly / Quarterly / Annual Premium tiers?</span>
+              </div>
+              <span class="badge-p1">High</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">6</span>
+                <span class="question-text"><strong>Matching Mechanism:</strong> Should staff manually assign workers to open requests or let algorithms handle self-serve matching?</span>
+              </div>
+              <span class="badge-p1">High</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">7</span>
+                <span class="question-text"><strong>Verification Policy:</strong> What mandatory documents (Aadhaar, Food Safety Certs) are required for worker verification?</span>
+              </div>
+              <span class="badge-p1">High</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">8</span>
+                <span class="question-text"><strong>Staff CRM Scope:</strong> What specific follow-up types (payment chasing, onboarding calls, matching) should be pre-configured?</span>
+              </div>
+              <span class="badge-p1">High</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">9</span>
+                <span class="question-text"><strong>Attendance Method:</strong> Is manual owner marking sufficient for MVP, or is worker app check-in strictly required from Day 1?</span>
+              </div>
+              <span class="badge-p1">High</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">10</span>
+                <span class="question-text"><strong>Customer Telemetry:</strong> Which user events are most critical for the activity monitoring dashboard?</span>
+              </div>
+              <span class="badge-p2">Medium</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">11</span>
+                <span class="question-text"><strong>Regional Languages:</strong> Are Hindi and Bengali translations required for the initial MVP pilot?</span>
+              </div>
+              <span class="badge-p2">Medium</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">12</span>
+                <span class="question-text"><strong>Launch Geography:</strong> Which target cities and initial volume targets are planned for the rollout?</span>
+              </div>
+              <span class="badge-p2">Medium</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">13</span>
+                <span class="question-text"><strong>Multi-Outlet Chains:</strong> Do early adopter restaurants require multi-location branch management immediately?</span>
+              </div>
+              <span class="badge-p2">Medium</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <span class="question-badge">14</span>
+                <span class="question-text"><strong>Budget & Target Delivery:</strong> Confirmation on the 10–12 week MVP release roadmap and team allocations.</span>
+              </div>
+              <span class="badge-p0">Critical</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 15. Assumptions Summary -->
+        <section id="section-15" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="file-text"></i></div>
+              <h2 class="section-title">15. Working Assumptions Summary</h2>
+            </div>
+          </div>
+
+          <div class="questions-grid">
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">Android-first React Native mobile client paired with an Admin Web console.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">OTP-based authentication with one verified profile account per mobile number.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">MVP tracks and records payouts without direct in-app bank money transfer.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">Vendor marketplace operates via structured Quote & Request flows rather than live inventory carts.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">Billing module manages platform invoices, not restaurant table/POS order slips.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">Premium tiers are initially targeted at Restaurant Owners; vendor plans in Phase 2.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">Internal follow-ups function as a lightweight CRM system for operational tasks.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+            <div class="question-item">
+              <div class="question-left">
+                <i data-lucide="check" style="color:var(--accent-purple);width:16px;height:16px;"></i>
+                <span class="question-text">Customer activity tracking is restricted strictly to relevant in-app business events.</span>
+              </div>
+              <span class="assumption-pill">[Assumption]</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 16. Glossary -->
+        <section id="section-16" class="prd-section">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <div class="section-icon-box"><i data-lucide="book-open"></i></div>
+              <h2 class="section-title">16. Domain Glossary & Terminology</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="prd-table">
+              <thead>
+                <tr>
+                  <th style="width: 220px;">Domain Term</th>
+                  <th>Standardized Definition</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Worker / Manpower</strong></td>
+                  <td>Individual skilled laborers offering food-service roles (Chef, Kitchen Helper, Cleaner, Clerk, Waiter).</td>
+                </tr>
+                <tr>
+                  <td><strong>Owner</strong></td>
+                  <td>The restaurant, cafe, dhaba, or cloud kitchen operator who hires staff and procures vendor supplies.</td>
+                </tr>
+                <tr>
+                  <td><strong>Vendor</strong></td>
+                  <td>Commercial third-party business offering wholesale food ingredients or specialized cleaning services.</td>
+                </tr>
+                <tr>
+                  <td><strong>Internal Staff</strong></td>
+                  <td>The platform company's direct operations, customer support, and account verification employees.</td>
+                </tr>
+                <tr>
+                  <td><strong>Hire Agreement</strong></td>
+                  <td>A time-bound contract between an owner and a worker specifying role, shift, duration, and locked daily/hourly rate.</td>
+                </tr>
+                <tr>
+                  <td><strong>Payout</strong></td>
+                  <td>The calculated gross and net remuneration payable to a worker based on verified attendance logs.</td>
+                </tr>
+                <tr>
+                  <td><strong>Premium Tier</strong></td>
+                  <td>Subscription membership granting restaurant owners unlimited hire requests, priority matching, and advanced tools.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="text-align:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--border-subtle);color:var(--text-dim);font-size:12px;display:flex;flex-direction:column;gap:4px;align-items:center;">
+            <div>&copy; 2026 <strong>Aarohan Tech Solutions</strong>. All Rights Reserved.</div>
+            <div>End of Product Requirements Document &bull; Restro Expert v1.0 &bull; Confidential &amp; Proprietary</div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Floating Back to Top Button -->
+  <button class="back-to-top" id="backToTopBtn" title="Back to top" aria-label="Back to top">
+    <i data-lucide="arrow-up" style="width:18px;height:18px;"></i>
+  </button>
+
+  <!-- Interactive Logic Scripts -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 1. Reading Progress Bar & Scrollspy
+    const progressBar = document.getElementById('readingProgressBar');
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.toc-item a');
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressBar.style.width = scrolled + '%';
+
+      // Back to top visibility
+      if (winScroll > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+
+      // Scrollspy
+      let currentSectionId = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (winScroll >= sectionTop) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      if (currentSectionId) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentSectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 2. Theme Switcher (Dark / Light)
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlEl = document.documentElement;
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = htmlEl.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', newTheme);
+      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
+      lucide.createIcons();
+    });
+
+    // 3. Mobile Sidebar Toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarNav = document.getElementById('sidebarNav');
+
+    if (sidebarToggle && sidebarNav) {
+      sidebarToggle.addEventListener('click', () => {
+        sidebarNav.classList.toggle('open');
+      });
+    }
+
+    // Close sidebar on link click on mobile
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024 && sidebarNav) {
+          sidebarNav.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
